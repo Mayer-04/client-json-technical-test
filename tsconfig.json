@@ -39,10 +39,10 @@
     "baseUrl": "src",
     "paths": {
       "@config/*": ["config/*"],
-      "@database/*": ["database/*"],
       "@modules/*": ["modules/*"],
       "@clients/*": ["modules/clients/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@docs/*": ["docs/*"]
     }
   },
   "include": ["src"],
