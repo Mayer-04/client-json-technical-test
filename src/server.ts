@@ -1,9 +1,14 @@
 import { PORT } from "@config/envs";
-import app from "./app";
+import { clientsRoute } from "@modules/clients/routes";
+import { Server } from "./app";
 
-function main() {
-	app.listen(PORT);
-	console.log(`Server listening on port ${PORT}`);
-}
+const startServer = () => {
+	const server = new Server({
+		port: PORT,
+		routes: clientsRoute,
+	});
 
-main();
+	server.start();
+};
+
+startServer();

@@ -1,20 +1,38 @@
-import { clientsRoute } from "@modules/clients/routes";
-import express from "express";
+import express, { type Router } from "express";
 
-const configExpress = {
-	app: express(),
-} as const;
+interface ServerOptions {
+	port: number;
+	routes: Router;
+}
 
-const { app } = configExpress;
+export class Server {
+	public readonly app = express();
+	private readonly PORT: number;
+	private readonly routes: Router;
 
-app.disable("x-powered-by");
+	constructor({ port, routes }: ServerOptions) {
+		this.PORT = port;
+		this.routes = routes;
+	}
 
-app.use(express.json());
+	private setupMiddlewares(): void {
+		this.app.use(express.json());
+		this.app.use(this.routes);
+	}
 
-app.use(clientsRoute);
+	private setupRoutes(): void {
+		this.app.get("/", (_req, res) => {
+			res.send("Hello World!");
+		});
+	}
 
-app.get("/", (_req, res) => {
-	res.send("Hello World!");
-});
+	public start(): void {
+		this.app.disable("x-powered-by");
+		this.setupMiddlewares();
+		this.setupRoutes();
 
-export default app;
+		this.app.listen(this.PORT, () => {
+			console.info(`Server is running at http://localhost:${this.PORT}`);
+		});
+	}
+}
