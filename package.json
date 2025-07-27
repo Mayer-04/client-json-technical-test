@@ -1,0 +1,47 @@
+{
+  "name": "client-json-technical-test",
+  "version": "1.0.0",
+  "description": "Prueba técnica de enriquecimiento de datos JSON en Node.js",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "watch": "tsx --watch src/server.ts",
+    "start": "node ./dist/server.js",
+    "start:cjs": "node ./dist/server.cjs",
+    "build": "tsup",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "test": "tsx --test",
+    "format": "biome format --write ./src",
+    "lint": "biome lint --write ./src",
+    "check": "biome check --write ./src",
+    "migrate:generate": "npx drizzle-kit generate",
+    "migrate": "npx drizzle-kit migrate"
+  },
+  "keywords": [
+    "node.js",
+    "express",
+    "typescript",
+    "prueba",
+    "json"
+  ],
+  "author": "Mayer Andrés Chaves Prada",
+  "license": "ISC",
+  "dependencies": {
+    "drizzle-orm": "0.44.3",
+    "express": "5.1.0",
+    "pg": "8.16.3",
+    "zod": "4.0.10"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@types/express": "5.0.3",
+    "@types/node": "24.1.0",
+    "@types/pg": "8.15.4",
+    "drizzle-kit": "^0.31.4",
+    "tsup": "8.5.0",
+    "tsx": "4.20.3",
+    "typescript": "5.8.3"
+  }
+}
