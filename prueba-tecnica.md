@@ -1,44 +1,56 @@
-# Procesamiento y Enriquecimiento de Datos de Clientes en JSON
+# Prueba Técnica – Backend Developer
 
-## 🏢 Empresa ficticia: DataPlus Solutions
+## Proyecto: Procesamiento y Enriquecimiento de Datos de Clientes
 
-**DataPlus Solutions** ayuda a empresas a integrar y enriquecer datos crudos de sus clientes. Recibimos información en formato JSON, que debe ser normalizada, validada y enriquecida para su posterior análisis o visualización.
+### Empresa ficticia: DataPlus Solutions
 
-## 🎯 Objetivo del reto
+**DataPlus Solutions** es una empresa especializada en la integración y enriquecimiento de datos crudos en formato JSON, provenientes de diversas fuentes. Nuestro objetivo es transformar estos datos en bruto en información estructurada, validada y útil para su análisis o visualización.
 
-Desarrollar una API RESTful con un frontend simple que permita:
+## 🎯 Objetivo del Reto
 
-- Subida de lotes JSON con datos de clientes.
-- Validación y enriquecimiento de los datos (edad, nivel de ingresos, ID único).
+Desarrollar una API RESTful que permita:
+
+- Subir lotes de datos JSON con información de clientes.
+- Validar y enriquecer los datos (edad, nivel de ingresos, ID único).
 - Consulta y filtrado de clientes desde la API.
 
-## 🔧 Requerimientos Backend
+## Requisitos del Backend
 
 ### Endpoints requeridos
 
 ```md
-| Método | Ruta              | Descripción                                       |
-| ------ | ----------------- | ------------------------------------------------- |
-| POST   | `/clients/upload` | Subir un lote (array) de clientes en formato JSON |
-| GET    | `/clients`        | Listar todos los clientes, con filtros            |
-| GET    | `/clients/:id`    | Ver detalles de un cliente específico             |
+| Método | Ruta            | Descripción                                            |
+| ------ | --------------- | ------------------------------------------------------ |
+| POST   | /clients/upload | Cargar un lote (array) de clientes en formato JSON.    |
+| GET    | /clients        | Listar clientes con soporte de filtros y paginación.   |
+| GET    | /clients/:id    | Obtener el detalle de un cliente específico por su ID. |
 ```
 
 ## Reglas de enriquecimiento
 
-1. `age` (edad) → Calcular a partir de `birthdate` (fecha de nacimiento).
+1. Edad (`age`)
 
-2. `income_level` (nivel de ingresos), según los ingresos (`income`):
+- Calcular a partir de la fecha de nacimiento (`birthdate`).
+
+2. Nivel de ingresos (`income_level`)
+
+Clasificación según el valor de `income`:
 
 - Menor a 2000 → `"bajo"`.
 - Entre 2000 y 6000 → `"medio"`.
 - Mayor a 6000 → `"alto"`.
 
-3. `id` generado automáticamente, formato:
+3. ID único (`id`)
 
-- `nombre-apellido-YYYYMMDD`.
-- Ejemplo: `"maria-lopez-19900520"`.
-- Nota: convertir a minúsculas, remover tildes y caracteres especiales si es necesario.
+Generar automáticamente con el formato:
+
+- `nombre-apellido-YYYYMMDD`
+  Ejemplo: "maria-lopez-19900520"
+
+- Reglas:
+  - Convertir a minúsculas.
+  - Eliminar tildes y caracteres especiales.
+  - Asegurar unicidad.
 
 ## Entrada esperada (POST /clients/upload)
 
@@ -59,6 +71,7 @@ Desarrollar una API RESTful con un frontend simple que permita:
 {
   "id": "maria-lopez-19900520",
   "name": "María López",
+  "birthdate": "1990-05-20",
   "age": 34,
   "income": 4200.5,
   "income_level": "medio",
@@ -66,72 +79,85 @@ Desarrollar una API RESTful con un frontend simple que permita:
 }
 ```
 
-## 🗃️ Esquema de base de datos
+## Filtros Permitidos en `GET /clients`
 
-```sql
-clients (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  birthdate DATE NOT NULL,
-  age INTEGER NOT NULL,
-  income DECIMAL NOT NULL,
-  income_level TEXT NOT NULL,
-  email TEXT NOT NULL
-)
+Se aceptan los siguientes filtros opcionales:
+
+- `name`:
+
+  - Búsqueda parcial, insensible a mayúsculas, tildes o caracteres especiales.
+  - **Ejemplo:** `/clients?name=lopez`.
+
+- `income_level`:
+  - Filtra por `"bajo"`, `"medio"` o `"alto"`.
+  - **Ejemplo:** `/clients?income_level=medio`.
+
+Ambos filtros pueden usarse juntos o por separado.
+
+## Paginación
+
+La API debe soportar paginación mediante los siguientes parámetros:
+
+- `page`: número de página (por defecto: `1`).
+- `size`: tamaño de página (por defecto: `10`).
+
+**Ejemplo combinado:**
+
+```bash
+/clients?name=ana&income_level=alto&page=2&size=5
 ```
 
-## ✅ Criterios de evaluación
+## Ejemplo de respuesta paginada (`GET /clients?income_level=medio&page=1&size=2`)
 
-- Cálculo correcto de edad (`age`).
-- Clasificación adecuada de nivel de ingresos (`income_level`).
-- Validaciones robustas:
+```json
+{
+  "data": [
+    {
+      "id": "ana-mendez-19880115",
+      "name": "Ana Méndez",
+      "birthdate": "1988-01-15",
+      "age": 37,
+      "income": 4500.0,
+      "income_level": "medio",
+      "email": "ana@example.com"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "size": 2,
+    "total": 5,
+    "total_pages": 3,
+    "has_next": true,
+    "has_previous": false
+  }
+}
+```
 
-- Formato de fecha (`birthdate`) válido.
+## Validaciones Requeridas
 
-  - `income` numérico positivo.
-  - `email` con formato correcto.
+- `birthdate`: formato válido (`YYYY-MM-DD`)
+- `income`: valor numérico positivo
+- `email`: formato de correo electrónico válido
+- Generación correcta de:
 
-- Generación precisa y única de `id`.
-- Filtros funcionales en la API (`GET /clients`):
+  - `age`
+  - `income_level`
+  - `id` único
 
-  - Rango de edad.
-  - Rango de ingreso.
-  - Búsqueda por nombre o email (parcial).
+- Filtros funcionales según los parámetros especificados
 
-- Código limpio, modular y documentado.
+## Requisitos Técnicos Adicionales
 
-## 🖥️ Requisitos Frontend
+El proyecto debe incluir:
 
-### Objetivo: Explorador de clientes
+- Al menos una **prueba unitaria** o de **integración**.
+- Contenedorización del entorno con **Docker**.
+- Documentación automática de la API (preferentemente con **Swagger** o equivalente).
 
-Pantallas Requeridas:
+## Criterios de Evaluación
 
-1. Formulario de carga JSON
-
-- Área de texto o subida de archivo `.json`.
-- Mostrar resultado tras enviar (éxito o errores).
-- Validación básica en frontend antes del envío.
-
-2. Tabla de clientes
-
-- Listado de todos los clientes enriquecidos.
-
-- Filtros:
-
-  - Edad mínima / máxima.
-  - Rango de ingresos.
-  - Nivel de ingreso (bajo, medio, alto).
-
-- Ordenar por edad o ingreso (asc/desc).
-
-3. Detalle individual
-
-- Al hacer clic en un cliente en la tabla, mostrar su información completa.
-
-## 💡 Bonus (no obligatorio, suma puntos)
-
-- Validación del JSON en el frontend antes de enviarlo.
-- Vista previa del enriquecimiento antes de guardar los datos.
-- Exportar tabla como archivo CSV.
-- Pruebas unitarias o de integración.
-- Dockerización básica del backend o frontend.
+- Correcta implementación de los requerimientos funcionales.
+- Legibilidad y mantenibilidad del código.
+- Buenas prácticas de desarrollo.
+- Cobertura de pruebas (al menos 1).
+- Uso adecuado de herramientas de documentación y contenedorización.
