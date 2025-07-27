@@ -15,11 +15,11 @@ export const incomeLevelEnum = pgEnum("income_level", [
 ]);
 
 export const clientsTable = pgTable("clients", {
-	id: text("id").primaryKey(),
-	name: varchar("name", { length: 255 }).notNull(),
-	birthdate: date("birthdate").notNull(),
-	age: integer("age").notNull(),
-	income: numeric("income").notNull(),
+	id: text().primaryKey(),
+	name: varchar({ length: 255 }).notNull(),
+	birthdate: date().notNull(),
+	age: integer().notNull(),
+	income: numeric({ precision: 10, scale: 2 }).notNull(),
 	incomeLevel: incomeLevelEnum().notNull(),
-	email: varchar("email", { length: 255 }).notNull().unique(),
+	email: varchar({ length: 255 }).notNull().unique(),
 });
