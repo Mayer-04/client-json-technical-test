@@ -9,9 +9,9 @@ export default defineConfig({
   dts: false,
   sourcemap: true, // Genera archivos .map para debugging
   minify: true,
-  shims: true, // Compatibilidad automática para cosas como __dirname, import.meta.url, etc.
+  shims: true, // Compatibilidad automática para __dirname, import.meta.url, etc.
   outDir: "dist",
-  skipNodeModulesBundle: true, // Evita bundle de dependencias Node.js
+  skipNodeModulesBundle: true,
   esbuildOptions(options) {
     options.platform = "node";
   },
