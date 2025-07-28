@@ -1,8 +1,31 @@
+# Dependencias locales y archivos de estado
 node_modules
-dist
-.env
-.dockerignore
-Dockerfile
+npm-debug.log
 *.log
-src/**/*.test.ts
-src/**/*.spec.ts
+
+# Git
+.git
+.gitignore
+
+# Archivos de entorno
+.env
+.env.*
+
+# Salidas de test o cobertura
+coverage
+.nyc_output
+
+# Archivos de documentación
+README.md
+
+# Configuración del editor
+.vscode/
+
+# Archivos de pruebas
+*.test.ts
+*.spec.ts
+tests/
+
+# Archivos de Docker
+Dockerfile
+.dockerignore
