@@ -1,4 +1,4 @@
-import { PORT } from "@config/envs";
+import { PORT } from "@config/env";
 import { clientsRoute } from "@modules/clients/routes";
 import { Server } from "./app";
 

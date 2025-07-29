@@ -21,6 +21,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
+
 RUN npm ci --omit=dev && npm cache clean --force
 
 # Copiar lo necesario del builder

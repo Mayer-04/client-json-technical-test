@@ -1,29 +1,21 @@
 import type { IncomeLevel } from "@clients/types";
 
-interface RawClientInput {
+export interface RawClientInput {
 	name: string;
 	birthdate: string;
 	income: string;
 	email: string;
 }
 
-interface EnrichedClient {
+export interface EnrichedClient extends RawClientInput {
 	id: string;
-	name: string;
-	birthdate: string;
 	age: number;
-	income: string;
 	incomeLevel: IncomeLevel;
-	email: string;
 }
 
-interface ClientQueryFilters {
-	minAge?: number;
-	maxAge?: number;
-	minIncome?: number;
-	maxIncome?: number;
+export interface ClientQueryFilters {
+	name?: string;
 	incomeLevel?: IncomeLevel;
-	search?: string;
+	page?: number;
+	size?: number;
 }
-
-export type { RawClientInput, EnrichedClient, ClientQueryFilters };

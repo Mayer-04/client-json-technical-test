@@ -23,14 +23,6 @@ export const calculateAge = (birthdate: string): number => {
 export const calculateIncomeLevel = (income: string): IncomeLevel => {
 	const convertIncome = Number(income);
 
-	if (Number.isNaN(convertIncome)) {
-		throw new Error("Ingreso no válido");
-	}
-
-	if (convertIncome < 0) {
-		throw new Error("Número negativo");
-	}
-
 	if (convertIncome < 2000) {
 		return "bajo";
 	}
@@ -56,16 +48,21 @@ export const generateId = (name: string, birthdate: string): string => {
 	return `${formattedName}-${formattedBirthdate}`;
 };
 
-export const enrichInput = (input: RawClientInput): EnrichedClient => {
-	return {
-		id: generateId(input.name, input.birthdate),
-		name: input.name,
-		birthdate: input.birthdate,
-		age: calculateAge(input.birthdate),
-		income: input.income,
-		incomeLevel: calculateIncomeLevel(input.income),
-		email: input.email,
-	};
+export const enrichClientInput = (
+	input: RawClientInput[],
+): EnrichedClient[] => {
+	return input.map(
+		({ name, birthdate, income, email }) =>
+			({
+				id: generateId(name, birthdate),
+				name,
+				birthdate,
+				age: calculateAge(birthdate),
+				income,
+				incomeLevel: calculateIncomeLevel(income),
+				email,
+			}) satisfies EnrichedClient,
+	);
 };
 
 // Esquema para una sola persona

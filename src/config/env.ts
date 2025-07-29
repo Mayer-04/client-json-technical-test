@@ -1,12 +1,11 @@
 import { existsSync } from "node:fs";
 import { env, exit, loadEnvFile } from "node:process";
+import { z } from "zod/v4";
 
 // ✅ Solo cargar .env si realmente existe
 if (existsSync(".env")) {
 	loadEnvFile();
 }
-
-import { z } from "zod/v4";
 
 const envSchema = z.object({
 	PORT: z.coerce.number().default(5000),

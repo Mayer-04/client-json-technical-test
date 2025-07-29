@@ -1,4 +1,5 @@
 import express, { type Router } from "express";
+import helmet from "helmet";
 
 interface ServerOptions {
 	port: number;
@@ -7,22 +8,34 @@ interface ServerOptions {
 
 export class Server {
 	public readonly app = express();
-	private readonly PORT: number;
+	private readonly port: number;
 	private readonly routes: Router;
 
 	constructor({ port, routes }: ServerOptions) {
-		this.PORT = port;
+		this.port = port;
 		this.routes = routes;
 	}
 
 	private setupMiddlewares(): void {
-		this.app.use(express.json());
+		this.app.use(helmet());
+		this.app.use(express.json({ limit: "10mb" }));
+		this.app.use(express.urlencoded({ extended: true }));
+		// Rutas de la API
 		this.app.use(this.routes);
 	}
 
 	private setupRoutes(): void {
 		this.app.get("/", (_req, res) => {
 			res.send("Hello World!");
+		});
+
+		this.app.get("/health", (_req, res) => {
+			res.status(200).json({
+				success: true,
+				message: "Server is running",
+				timestamp: new Date().toISOString(),
+				uptime: process.uptime(),
+			});
 		});
 	}
 
@@ -31,8 +44,8 @@ export class Server {
 		this.setupMiddlewares();
 		this.setupRoutes();
 
-		this.app.listen(this.PORT, () => {
-			console.info(`Server is running at http://localhost:${this.PORT}`);
+		this.app.listen(this.port, () => {
+			console.info(`Server is running at http://localhost:${this.port}`);
 		});
 	}
 }
