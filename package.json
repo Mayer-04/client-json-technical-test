@@ -1,0 +1,58 @@
+{
+  "name": "client-json-technical-test",
+  "version": "1.0.0",
+  "description": "Prueba técnica de enriquecimiento de datos JSON en Node.js",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "watch": "tsx --watch src/server.ts",
+    "start": "node ./dist/server.js",
+    "start:cjs": "node ./dist/server.cjs",
+    "build": "tsup",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "test": "tsx --test",
+    "format": "biome format --write ./src",
+    "lint": "biome lint --write ./src",
+    "check": "biome check --write ./src",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "keywords": [
+    "node.js",
+    "express",
+    "typescript",
+    "prueba",
+    "json"
+  ],
+  "author": "Mayer Andrés Chaves Prada",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.5",
+    "drizzle-orm": "0.44.4",
+    "express": "5.1.0",
+    "helmet": "8.1.0",
+    "pg": "8.16.3",
+    "pino-http": "10.5.0",
+    "swagger-ui-express": "5.0.1",
+    "zod": "4.0.15"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.4",
+    "@types/express": "5.0.3",
+    "@types/jest": "30.0.0",
+    "@types/node": "24.2.1",
+    "@types/pg": "8.15.5",
+    "@types/supertest": "6.0.3",
+    "drizzle-kit": "0.31.4",
+    "jest": "30.0.5",
+    "supertest": "7.1.4",
+    "swagger-jsdoc": "6.2.8",
+    "ts-jest": "29.4.1",
+    "tsup": "8.5.0",
+    "tsx": "4.20.3",
+    "typescript": "5.9.2"
+  }
+}
