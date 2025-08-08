@@ -1,0 +1,72 @@
+{
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noUselessConstructor": "error"
+      },
+      "correctness": {
+        "noStringCaseMismatch": "error",
+        "noUnusedVariables": "error",
+        "useValidTypeof": "error"
+      },
+      "nursery": {
+        "noAwaitInLoop": "error"
+      },
+      "performance": {
+        "noBarrelFile": "error",
+        "noDynamicNamespaceImportAccess": "error",
+        "noReExportAll": "error"
+      },
+      "style": {
+        "noCommonJs": "error",
+        "noNestedTernary": "error",
+        "noNonNullAssertion": "warn",
+        "useConsistentArrayType": "error",
+        "useConst": "error",
+        "useImportType": "error",
+        "noProcessEnv": "error",
+        "useNamingConvention": "error",
+        "useSingleVarDeclarator": "warn",
+        "useNodejsImportProtocol": "error"
+      },
+      "suspicious": {
+        "noAsyncPromiseExecutor": "error",
+        "noDoubleEquals": "error",
+        "noDuplicateClassMembers": "error",
+        "noDuplicateObjectKeys": "error",
+        "noEmptyBlockStatements": "error",
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "error",
+        "noVar": "error",
+        "useAwait": "error"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "attributePosition": "auto",
+    "indentStyle": "tab",
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "lineEnding": "lf"
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none",
+      "expand": "auto"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [":URL:", ":NODE:", ":PACKAGE:", ":ALIAS:", ":PATH:"]
+          }
+        }
+      }
+    }
+  }
+}

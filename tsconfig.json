@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    /* Target & Module Resolution */
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2024", "ESNext.Array", "ESNext.Collection"],
+    "moduleResolution": "bundler", //
+    "moduleDetection": "force",
+    "allowImportingTsExtensions": true, //
+
+    /* Interop & Module System */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* Strictness & Type Safety */
+    "strict": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Paths */
+    "rootDir": "src",
+    "outDir": "dist",
+
+    /* Debugging */
+    "sourceMap": true,
+
+    /* Performance */
+    "skipLibCheck": true,
+
+    /* Clean Output */
+    "removeComments": true,
+
+    /* Base URL */
+    "baseUrl": "src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"],
+      "@clients/*": ["modules/clients/*"],
+      "@shared/*": ["shared/*"],
+      "@docs/*": ["docs/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
+}
