@@ -1,0 +1,14 @@
+POST http://localhost:5000/clients/upload HTTP/1.1
+content-type: application/json
+
+[
+    {
+        "name": "Mayer Chavés",
+        "birthdate": "2000-02-04",
+        "income": 4200.4,
+        "email": "mayer@example.com"
+    }
+]
+
+###
+GET https://example.com/comments/1 HTTP/1.1
